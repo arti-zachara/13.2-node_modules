@@ -1,8 +1,10 @@
+var OSinfo = require("../modules/OSinfo");
+
 process.stdin.setEncoding("utf-8");
 
-//greeting message
+//greetings message
 process.stdout.write(
-  "Type '/exit' to quit or 'version' for version and encoding info.\n"
+  "Type: \n '/exit' to quit,\n '/version' for version and encoding info,\n '/sayhello' for greetings message,\n '/getOSinfo' for system info\n"
 );
 
 // on reading function
@@ -16,7 +18,17 @@ process.stdin.on("readable", function() {
         process.stdout.write("Quitting app!\n");
         process.exit();
         break;
-      case "version":
+
+      case "/sayhello":
+        process.stdout.write("hello!\n");
+        break;
+
+      case "/getOSinfo":
+        // get system information
+        OSinfo.print();
+        break;
+
+      case "/version":
         // display info on node version and encoding
         process.stdout.write(
           "version: " +
@@ -27,6 +39,7 @@ process.stdin.on("readable", function() {
             "\n"
         );
         break;
+
       default:
         // error message
         process.stderr.write("Wrong instruction!");

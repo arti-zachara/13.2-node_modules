@@ -1,5 +1,5 @@
 var os = require("os"),
-  time = require("../modules/time");
+  time = require("./time");
 
 // getting system info
 function getOSinfo() {
