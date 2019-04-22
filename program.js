@@ -15,6 +15,7 @@ process.stdin.on("readable", function() {
       case "/exit":
         process.stdout.write("Quitting app!\n");
         process.exit();
+        break;
       case "version":
         // display info on node version and encoding
         process.stdout.write(
