@@ -1,4 +1,15 @@
-var OSinfo = require("./modules/OSinfo");
+var OSinfo = require("./modules/OSinfo"),
+  EventEmitter = require("events").EventEmitter;
+
+//event Emitter - before and after a command
+
+var emitter = new EventEmitter();
+emitter.on("beforeCommand", function(instruction) {
+  console.log("You wrote: " + instruction + ", trying to run command");
+});
+emitter.on("afterCommand", function() {
+  console.log("Finished command");
+});
 
 process.stdin.setEncoding("utf-8");
 
@@ -13,6 +24,8 @@ process.stdin.on("readable", function() {
   if (input !== null) {
     var instruction = input.toString().trim();
     // trim - remove white spaces and others like tabs or enters
+    emitter.emit("beforeCommand", instruction);
+    // event emiter
     switch (instruction) {
       case "/exit":
         process.stdout.write("Quitting app!\n");
@@ -44,5 +57,7 @@ process.stdin.on("readable", function() {
         // error message
         process.stderr.write("Wrong instruction!");
     }
+    // event emmiter after command
+    emitter.emit("afterCommand");
   }
 });
